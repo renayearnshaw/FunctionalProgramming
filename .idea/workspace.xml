@@ -24,6 +24,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="TF_FMT" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
   </component>
@@ -43,5 +44,15 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="380" y="130" key="CommitChangelistDialog2" timestamp="1588147330440">
+      <screen x="0" y="22" width="1920" height="1010" />
+    </state>
+    <state x="380" y="130" key="CommitChangelistDialog2/-1920.22.1920.1058/0.22.1920.1010@0.22.1920.1010" timestamp="1588147330440" />
+    <state x="453" y="267" key="Vcs.Push.Dialog.v2" timestamp="1588147334080">
+      <screen x="0" y="22" width="1920" height="1010" />
+    </state>
+    <state x="453" y="267" key="Vcs.Push.Dialog.v2/-1920.22.1920.1058/0.22.1920.1010@0.22.1920.1010" timestamp="1588147334080" />
   </component>
 </project>
