@@ -59,4 +59,26 @@ public class Car {
                 (bootContents != null ? ", bootContents=" + bootContents : ", nothing in boot") +
                 '}';
     }
+
+    // This object only defines behaviour
+    static class RedCarCriterion implements CarCriterion {
+
+        @Override
+        public boolean test(Car car) {
+            return car.getColour().equals("Red");
+        }
+    }
+
+    // This object defines state as well as behaviour
+    static class GasLevelCriterion implements CarCriterion {
+        private int threshold;
+        public GasLevelCriterion (int threshold) {
+            this.threshold = threshold;
+        }
+        @Override
+        public boolean test(Car car) {
+            return car.getGasLevel() >= threshold;
+        }
+    }
+
 }

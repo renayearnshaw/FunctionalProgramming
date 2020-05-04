@@ -6,27 +6,6 @@ interface CarCriterion {
     boolean test(Car car);
 }
 
-// This object only defined behaviour
-class RedCarCriterion implements CarCriterion {
-
-    @Override
-    public boolean test(Car car) {
-        return car.getColour().equals("Red");
-    }
-}
-
-// This object defines state as well as behaviour
-class GasLevelCriterion implements CarCriterion {
-    private int threshold;
-    public GasLevelCriterion (int threshold) {
-        this.threshold = threshold;
-    }
-    @Override
-    public boolean test(Car car) {
-        return car.getGasLevel() >= threshold;
-    }
-}
-
 public class CarScratch {
     public static void main(String[] args) {
         List<Car> cars = Arrays.asList(
@@ -38,8 +17,8 @@ public class CarScratch {
         );
 
         showAll(cars);
-        showAll(getCarsByCriterion(cars, new RedCarCriterion()));
-        showAll(getCarsByCriterion(cars, new GasLevelCriterion(6)));
+        showAll(getCarsByCriterion(cars, new Car.RedCarCriterion()));
+        showAll(getCarsByCriterion(cars, new Car.GasLevelCriterion(6)));
 
         // Prove that we haven't changed the initial list
         showAll(cars);
