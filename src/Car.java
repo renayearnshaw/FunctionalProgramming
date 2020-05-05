@@ -60,6 +60,15 @@ public class Car {
                 '}';
     }
 
+    // Factory method returning a singleton
+    public static CarCriterion getRedCarCriterion() {
+        return RED_CAR_CRITERION;
+    }
+
+    // The criterion only defines behaviour, so we only need one instance
+    // per class. Hence, we make it a singleton.
+    private static RedCarCriterion RED_CAR_CRITERION = new RedCarCriterion();
+
     // This object only defines behaviour
     static class RedCarCriterion implements CarCriterion {
 

@@ -17,7 +17,7 @@ public class CarScratch {
         );
 
         showAll(cars);
-        showAll(getCarsByCriterion(cars, new Car.RedCarCriterion()));
+        showAll(getCarsByCriterion(cars, Car.getRedCarCriterion()));
         showAll(getCarsByCriterion(cars, new Car.GasLevelCriterion(6)));
 
         // Prove that we haven't changed the initial list
