@@ -65,18 +65,15 @@ public class Car {
         return RED_CAR_CRITERION;
     }
 
-    // The criterion only defines behaviour, so we only need one instance
-    // per class. Hence, we make it a singleton.
-    private static RedCarCriterion RED_CAR_CRITERION = new RedCarCriterion();
-
-    // This object only defines behaviour
-    static class RedCarCriterion implements CarCriterion {
+    // The red car criterion only defines behaviour, so we only need one instance
+    // per class. Hence, we make it a singleton. We also use an anonymous innner class.
+    private static CarCriterion RED_CAR_CRITERION = new CarCriterion() {
 
         @Override
         public boolean test(Car car) {
             return car.getColour().equals("Red");
         }
-    }
+    };
 
     // This object defines state as well as behaviour
     static class GasLevelCriterion implements CarCriterion {
