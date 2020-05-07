@@ -66,7 +66,7 @@ public class Car {
         return RED_CAR_CRITERION;
     }
 
-    // The red car criterion only defines behaviour, so we only need one instance
+    // The red car criterion only defines behaviour, not state, so we only need one instance
     // per class. Hence, we make it a singleton. We also use a lambda expression.
     private static CarCriterion RED_CAR_CRITERION = (car) -> {
             return car.getColour().equals("Red");
@@ -84,10 +84,13 @@ public class Car {
         }
     }
 
+    // Factory method returning a singleton
     public static Comparator<Car> getGasLevelComparator() {
         return GAS_LEVEL_COMPARATOR;
     }
 
+    // This sort only defines behaviour, not state, so we only need one instance
+    // per class. Hence, we make it a singleton. We also use a lambda expression.
     private static final Comparator<Car> GAS_LEVEL_COMPARATOR = (Car o1, Car o2) -> {
             return o1.gasLevel - o2.gasLevel;
     };
