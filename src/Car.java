@@ -1,5 +1,6 @@
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class Car {
@@ -83,4 +84,11 @@ public class Car {
         }
     }
 
+    public static Comparator<Car> getGasLevelComparator() {
+        return GAS_LEVEL_COMPARATOR;
+    }
+
+    private static final Comparator<Car> GAS_LEVEL_COMPARATOR = (Car o1, Car o2) -> {
+            return o1.gasLevel - o2.gasLevel;
+    };
 }

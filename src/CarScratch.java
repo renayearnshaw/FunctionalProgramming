@@ -22,6 +22,8 @@ public class CarScratch {
 
         // Prove that we haven't changed the initial list
         showAll(cars);
+        cars.sort(Car.getGasLevelComparator());
+        showAll(cars);
     }
 
     public static void showAll(List<Car> cars) {
