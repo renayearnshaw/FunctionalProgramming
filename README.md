@@ -8,4 +8,6 @@ We start with a traditional object oriented design pattern and move to a functio
 We do this for filtering and sorting of objects.
 
 We learn about:
-1. lambda expressions and their syntax variations
+1. Lambda expressions and their syntax variations (block lambdas, expression lambdas,
+with or without type specifiers, single arguments without brackets)
+2. Functional interfaces and the `@FunctionalInterface` annotation

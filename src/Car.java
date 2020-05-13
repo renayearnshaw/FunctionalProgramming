@@ -61,6 +61,11 @@ public class Car {
                 '}';
     }
 
+    // The type of the lambda is specified by the return type of the function
+    public static CarCriterion getFourPassengersCriterion() {
+        return car -> car.passengers.size() == 4;
+    };
+
     // Factory method returning a singleton
     public static CarCriterion getRedCarCriterion() {
         return RED_CAR_CRITERION;

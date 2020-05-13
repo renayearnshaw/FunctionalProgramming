@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+@FunctionalInterface
 interface CarCriterion {
     boolean test(Car car);
 }
@@ -24,6 +25,10 @@ public class CarScratch {
         showAll(cars);
         cars.sort(Car.getGasLevelComparator());
         showAll(cars);
+
+        // The type of the lambda expression is specified by the argument type of getCarsByCriterion
+        showAll(getCarsByCriterion(cars, car -> car.getPassengers().size() == 2));
+        showAll(getCarsByCriterion(cars, Car.getFourPassengersCriterion()));
     }
 
     public static void showAll(List<Car> cars) {
