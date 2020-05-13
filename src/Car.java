@@ -62,21 +62,21 @@ public class Car {
     }
 
     // The type of the lambda is specified by the return type of the function
-    public static CarCriterion getFourPassengersCriterion() {
+    public static Criterion<Car> getFourPassengersCriterion() {
         return car -> car.passengers.size() == 4;
     };
 
     // Factory method returning a singleton
-    public static CarCriterion getRedCarCriterion() {
+    public static Criterion<Car> getRedCarCriterion() {
         return RED_CAR_CRITERION;
     }
 
     // The red car criterion only defines behaviour, not state, so we only need one instance
     // per class. Hence, we make it a singleton. We also use an expression lambda.
-    private static CarCriterion RED_CAR_CRITERION = car -> car.getColour().equals("Red");
+    private static Criterion<Car> RED_CAR_CRITERION = car -> car.colour.equals("Red");
 
     // This object defines state as well as behaviour
-    static class GasLevelCriterion implements CarCriterion {
+    static class GasLevelCriterion implements Criterion<Car> {
         private int threshold;
         public GasLevelCriterion (int threshold) {
             this.threshold = threshold;

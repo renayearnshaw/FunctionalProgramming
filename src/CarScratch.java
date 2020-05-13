@@ -3,8 +3,8 @@ import java.util.Arrays;
 import java.util.List;
 
 @FunctionalInterface
-interface CarCriterion {
-    boolean test(Car car);
+interface Criterion<E> {
+    boolean test(E car);
 }
 
 public class CarScratch {
@@ -18,8 +18,8 @@ public class CarScratch {
         );
 
         showAll(cars);
-        showAll(getCarsByCriterion(cars, Car.getRedCarCriterion()));
-        showAll(getCarsByCriterion(cars, new Car.GasLevelCriterion(6)));
+        showAll(getByCriterion(cars, Car.getRedCarCriterion()));
+        showAll(getByCriterion(cars, new Car.GasLevelCriterion(6)));
 
         // Prove that we haven't changed the initial list
         showAll(cars);
@@ -27,24 +27,24 @@ public class CarScratch {
         showAll(cars);
 
         // The type of the lambda expression is specified by the argument type of getCarsByCriterion
-        showAll(getCarsByCriterion(cars, car -> car.getPassengers().size() == 2));
-        showAll(getCarsByCriterion(cars, Car.getFourPassengersCriterion()));
+        showAll(getByCriterion(cars, car -> car.getPassengers().size() == 2));
+        showAll(getByCriterion(cars, Car.getFourPassengersCriterion()));
     }
 
-    public static void showAll(List<Car> cars) {
-        for (Car car: cars) {
-            System.out.println(car);
+    public static <E> void showAll(List<E> list) {
+        for (E each: list) {
+            System.out.println(each);
         }
         System.out.println("-----------------------------------------------");
     }
 
     // Returns a new list without modifying the existing one. The selection criteria is
     // passed in as a object that specifies the required behaviour.
-    public static List<Car> getCarsByCriterion(Iterable<Car> in, CarCriterion criterion) {
-        List<Car> filtered = new ArrayList<>();
-        for (Car car: in) {
-            if (criterion.test(car)) {
-                filtered.add(car);
+    public static <E> List<E> getByCriterion(Iterable<E> input, Criterion<E> criterion) {
+        List<E> filtered = new ArrayList<>();
+        for (E each: input) {
+            if (criterion.test(each)) {
+                filtered.add(each);
             }
         }
         return filtered;
