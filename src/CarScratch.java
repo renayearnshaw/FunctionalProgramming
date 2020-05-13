@@ -1,3 +1,4 @@
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -23,12 +24,13 @@ public class CarScratch {
 
         // Prove that we haven't changed the initial list
         showAll(cars);
-        cars.sort(Car.getGasLevelComparator());
-        showAll(cars);
 
-        // The type of the lambda expression is specified by the argument type of getCarsByCriterion
-        showAll(getByCriterion(cars, car -> car.getPassengers().size() == 2));
-        showAll(getByCriterion(cars, Car.getFourPassengersCriterion()));
+        List<String> colours = Arrays.asList("Red", "Yellow", "Pink", "Green", "Orange", "Purple", "Blue");
+        showAll(getByCriterion(colours, colour -> colour.length() > 4));
+
+        LocalDate today = LocalDate.now();
+        List<LocalDate> dates = Arrays.asList(today, today.plusDays(1), today.plusDays(7), today.minusDays(1));
+        showAll(getByCriterion(dates, date -> date.isAfter(today)));
     }
 
     public static <E> void showAll(List<E> list) {
