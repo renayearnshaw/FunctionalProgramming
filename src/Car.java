@@ -76,12 +76,7 @@ public class Car {
     private static Criterion<Car> RED_CAR_CRITERION = car -> car.colour.equals("Red");
 
     public static Criterion<Car> getGasLevelCriterion(int threshold) {
-        return new Criterion<>() {
-            @Override
-            public boolean test(Car car) {
-                return car.getGasLevel() >= threshold;
-            }
-        };
+        return car -> car.getGasLevel() >= threshold;
     }
 
     // This sort only defines behaviour, not state, so we only need one instance
