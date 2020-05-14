@@ -20,17 +20,11 @@ public class CarScratch {
 
         showAll(cars);
         showAll(getByCriterion(cars, Car.getRedCarCriterion()));
-        showAll(getByCriterion(cars, new Car.GasLevelCriterion(6)));
+        showAll(getByCriterion(cars, Car.getGasLevelCriterion(7)));
+        showAll(getByCriterion(cars, Car.getGasLevelCriterion(4)));
 
         // Prove that we haven't changed the initial list
         showAll(cars);
-
-        List<String> colours = Arrays.asList("Red", "Yellow", "Pink", "Green", "Orange", "Purple", "Blue");
-        showAll(getByCriterion(colours, colour -> colour.length() > 4));
-
-        LocalDate today = LocalDate.now();
-        List<LocalDate> dates = Arrays.asList(today, today.plusDays(1), today.plusDays(7), today.minusDays(1));
-        showAll(getByCriterion(dates, date -> date.isAfter(today)));
     }
 
     public static <E> void showAll(List<E> list) {

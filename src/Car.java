@@ -75,21 +75,13 @@ public class Car {
     // per class. Hence, we make it a singleton. We also use an expression lambda.
     private static Criterion<Car> RED_CAR_CRITERION = car -> car.colour.equals("Red");
 
-    // This object defines state as well as behaviour
-    static class GasLevelCriterion implements Criterion<Car> {
-        private int threshold;
-        public GasLevelCriterion (int threshold) {
-            this.threshold = threshold;
-        }
-        @Override
-        public boolean test(Car car) {
-            return car.getGasLevel() >= threshold;
-        }
-    }
-
-    // Factory method returning a singleton
-    public static Comparator<Car> getGasLevelComparator() {
-        return GAS_LEVEL_COMPARATOR;
+    public static Criterion<Car> getGasLevelCriterion(int threshold) {
+        return new Criterion<>() {
+            @Override
+            public boolean test(Car car) {
+                return car.getGasLevel() >= threshold;
+            }
+        };
     }
 
     // This sort only defines behaviour, not state, so we only need one instance
