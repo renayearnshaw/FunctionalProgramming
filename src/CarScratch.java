@@ -1,4 +1,3 @@
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -20,8 +19,7 @@ public class CarScratch {
 
         showAll(cars);
         showAll(getByCriterion(cars, Car.getRedCarCriterion()));
-        showAll(getByCriterion(cars, Car.getGasLevelCriterion(7)));
-        showAll(getByCriterion(cars, Car.getGasLevelCriterion(4)));
+        showAll(getByCriterion(cars, Car.getColourCriterion(new String[] {"Octarine", "Green"})));
 
         // Prove that we haven't changed the initial list
         showAll(cars);

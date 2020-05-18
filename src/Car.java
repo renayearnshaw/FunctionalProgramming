@@ -75,6 +75,17 @@ public class Car {
     // per class. Hence, we make it a singleton. We also use an expression lambda.
     private static Criterion<Car> RED_CAR_CRITERION = car -> car.colour.equals("Red");
 
+    public static Criterion<Car> getColourCriterion(String... colours) {
+        return car -> {
+            for (String colour: colours) {
+                if (car.colour == colour) {
+                    return true;
+                }
+            }
+            return false;
+        };
+    }
+
     public static Criterion<Car> getGasLevelCriterion(int threshold) {
         return car -> car.getGasLevel() >= threshold;
     }

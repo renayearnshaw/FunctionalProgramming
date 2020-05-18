@@ -9,5 +9,7 @@ We do this for filtering and sorting of objects.
 
 We learn about:
 1. Lambda expressions and their syntax variations (block lambdas, expression lambdas,
-with or without type specifiers, single arguments without brackets)
-2. Functional interfaces and the `@FunctionalInterface` annotation
+with or without type specifiers, single arguments without brackets).
+2. Functional interfaces and the `@FunctionalInterface` annotation.
+3. Closures and the concept of _effectively final_.
+4. Higher order functions.
