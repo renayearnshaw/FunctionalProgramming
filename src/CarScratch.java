@@ -8,6 +8,19 @@ interface Criterion<E> {
 }
 
 public class CarScratch {
+
+    public static <E> Criterion<E> negate(Criterion<E> criterion) {
+        return x -> !criterion.test(x);
+    }
+
+    public static <E> Criterion<E> or(Criterion<E> criterion1, Criterion<E> criterion2) {
+        return x -> criterion1.test(x) || criterion2.test(x);
+    }
+
+    public static <E> Criterion<E> and(Criterion<E> criterion1, Criterion<E> criterion2) {
+        return x -> criterion1.test(x) && criterion2.test(x);
+    }
+
     public static void main(String[] args) {
         List<Car> cars = Arrays.asList(
           Car.withGasColourPassengers(6, "Red", "Fred", "Jim", "Sheila"),
@@ -18,8 +31,17 @@ public class CarScratch {
         );
 
         showAll(cars);
-        showAll(getByCriterion(cars, Car.getRedCarCriterion()));
-        showAll(getByCriterion(cars, Car.getColourCriterion(new String[] {"Octarine", "Green"})));
+
+        Criterion<Car> green = Car.getColourCriterion(new String[] {"Green"});
+        Criterion<Car> octarine = Car.getColourCriterion(new String[] {"Octarine"});
+        Criterion<Car> greenOrOctarine = or(green, octarine);
+        showAll(getByCriterion(cars, greenOrOctarine));
+        Criterion<Car> notGreenOrOctarine = negate(greenOrOctarine);
+        showAll(getByCriterion(cars, notGreenOrOctarine));
+
+        Criterion<Car> gas6OrMore = Car.getGasLevelCriterion(6);
+        Criterion<Car> gas6OrMoreAndGreen = and(gas6OrMore, green);
+        showAll(getByCriterion(cars, gas6OrMoreAndGreen));
 
         // Prove that we haven't changed the initial list
         showAll(cars);
