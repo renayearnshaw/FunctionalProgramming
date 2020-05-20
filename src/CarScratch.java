@@ -17,13 +17,13 @@ public class CarScratch {
 
         Criterion<Car> green = Car.getColourCriterion(new String[] {"Green"});
         Criterion<Car> octarine = Car.getColourCriterion(new String[] {"Octarine"});
-        Criterion<Car> greenOrOctarine = Criterion.or(green, octarine);
+        Criterion<Car> greenOrOctarine = green.or(octarine);
         showAll(getByCriterion(cars, greenOrOctarine));
-        Criterion<Car> notGreenOrOctarine = Criterion.negate(greenOrOctarine);
+        Criterion<Car> notGreenOrOctarine = greenOrOctarine.negate();
         showAll(getByCriterion(cars, notGreenOrOctarine));
 
         Criterion<Car> gas6OrMore = Car.getGasLevelCriterion(6);
-        Criterion<Car> gas6OrMoreAndGreen = Criterion.and(gas6OrMore, green);
+        Criterion<Car> gas6OrMoreAndGreen = gas6OrMore.and(green);
         showAll(getByCriterion(cars, gas6OrMoreAndGreen));
 
         // Prove that we haven't changed the initial list

@@ -13,3 +13,4 @@ with or without type specifiers, single arguments without brackets).
 2. Functional interfaces and the `@FunctionalInterface` annotation.
 3. Closures and the concept of _effectively final_.
 4. Higher order functions.
+5. Static and default instance methods in interfaces.
