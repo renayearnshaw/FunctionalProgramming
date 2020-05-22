@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class CarScratch {
 
@@ -15,15 +16,15 @@ public class CarScratch {
 
         showAll(cars);
 
-        Criterion<Car> green = Car.getColourCriterion(new String[] {"Green"});
-        Criterion<Car> octarine = Car.getColourCriterion(new String[] {"Octarine"});
-        Criterion<Car> greenOrOctarine = green.or(octarine);
+        Predicate<Car> green = Car.getColourCriterion(new String[] {"Green"});
+        Predicate<Car> octarine = Car.getColourCriterion(new String[] {"Octarine"});
+        Predicate<Car> greenOrOctarine = green.or(octarine);
         showAll(getByCriterion(cars, greenOrOctarine));
-        Criterion<Car> notGreenOrOctarine = greenOrOctarine.negate();
+        Predicate<Car> notGreenOrOctarine = greenOrOctarine.negate();
         showAll(getByCriterion(cars, notGreenOrOctarine));
 
-        Criterion<Car> gas6OrMore = Car.getGasLevelCriterion(6);
-        Criterion<Car> gas6OrMoreAndGreen = gas6OrMore.and(green);
+        Predicate<Car> gas6OrMore = Car.getGasLevelCriterion(6);
+        Predicate<Car> gas6OrMoreAndGreen = gas6OrMore.and(green);
         showAll(getByCriterion(cars, gas6OrMoreAndGreen));
 
         // Prove that we haven't changed the initial list
@@ -39,7 +40,7 @@ public class CarScratch {
 
     // Returns a new list without modifying the existing one. The selection criteria is
     // passed in as a object that specifies the required behaviour.
-    public static <E> List<E> getByCriterion(Iterable<E> input, Criterion<E> criterion) {
+    public static <E> List<E> getByCriterion(Iterable<E> input, Predicate<E> criterion) {
         List<E> filtered = new ArrayList<>();
         for (E each: input) {
             if (criterion.test(each)) {

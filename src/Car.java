@@ -2,6 +2,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class Car {
     private final int gasLevel;
@@ -62,20 +63,20 @@ public class Car {
     }
 
     // The type of the lambda is specified by the return type of the function
-    public static Criterion<Car> getFourPassengersCriterion() {
+    public static Predicate<Car> getFourPassengersCriterion() {
         return car -> car.passengers.size() == 4;
     };
 
     // Factory method returning a singleton
-    public static Criterion<Car> getRedCarCriterion() {
+    public static Predicate<Car> getRedCarCriterion() {
         return RED_CAR_CRITERION;
     }
 
     // The red car criterion only defines behaviour, not state, so we only need one instance
     // per class. Hence, we make it a singleton. We also use an expression lambda.
-    private static Criterion<Car> RED_CAR_CRITERION = car -> car.colour.equals("Red");
+    private static Predicate<Car> RED_CAR_CRITERION = car -> car.colour.equals("Red");
 
-    public static Criterion<Car> getColourCriterion(String... colours) {
+    public static Predicate<Car> getColourCriterion(String... colours) {
         return car -> {
             for (String colour: colours) {
                 if (car.colour == colour) {
@@ -86,7 +87,7 @@ public class Car {
         };
     }
 
-    public static Criterion<Car> getGasLevelCriterion(int threshold) {
+    public static Predicate<Car> getGasLevelCriterion(int threshold) {
         return car -> car.getGasLevel() >= threshold;
     }
 
