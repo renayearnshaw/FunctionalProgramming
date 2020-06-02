@@ -1,7 +1,9 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.function.ToIntFunction;
 
 public class CarScratch {
 
@@ -29,6 +31,17 @@ public class CarScratch {
 
         // Prove that we haven't changed the initial list
         showAll(cars);
+
+        // Create a reference car that has a specific fuel level
+        Car bert = Car.withGasColourPassengers(5, "N/A");
+        // Create a ToIntFunction that compares a car with bert
+        ToIntFunction<Car> compareWithBertInt = compareWithThis(bert, Car.getGasLevelComparator());
+        // Create a Predicate function that compares a car with bert
+        Predicate<Car> compareWithBert = comparesGreater(compareWithBertInt);
+        for (Car car: cars) {
+            System.out.println("Comparing car " + car + " with bert gives " +
+                    compareWithBert.test(car));
+        }
     }
 
     public static <E> void showAll(List<E> list) {
@@ -48,5 +61,15 @@ public class CarScratch {
             }
         }
         return filtered;
+    }
+
+    // A factory method that returns a ToIntFunction function that compares a car with the target car
+    public static <E> ToIntFunction<E> compareWithThis(E target, Comparator<E> comparator) {
+        return  x -> comparator.compare(target, x);
+    }
+
+    // A factory method that returns a Predicate function that compares a car with the target car
+    public static <E> Predicate<E> comparesGreater(ToIntFunction<E> compareWithTarget) {
+        return x -> compareWithTarget.applyAsInt(x) < 0;
     }
 }

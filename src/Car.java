@@ -91,6 +91,10 @@ public class Car {
         return car -> car.getGasLevel() >= threshold;
     }
 
+    public static Comparator<Car> getGasLevelComparator() {
+        return GAS_LEVEL_COMPARATOR;
+    }
+
     // This sort only defines behaviour, not state, so we only need one instance
     // per class. Hence, we make it a singleton. We also use an expression lambda.
     private static final Comparator<Car> GAS_LEVEL_COMPARATOR = (o1, o2) -> o1.gasLevel - o2.gasLevel;

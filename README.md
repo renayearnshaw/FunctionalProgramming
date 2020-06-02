@@ -8,9 +8,15 @@ We start with a traditional object oriented design pattern and move to a functio
 We do this for filtering and sorting of objects.
 
 We learn about:
-1. Lambda expressions and their syntax variations (block lambdas, expression lambdas,
-with or without type specifiers, single arguments without brackets).
-2. Functional interfaces and the `@FunctionalInterface` annotation.
-3. Closures and the concept of _effectively final_.
-4. Higher order functions.
-5. Static and default instance methods in interfaces.
+1. Lambda expressions and their syntax variations:
+   - block lambdas
+   - expression lambdas
+   - type specifiers are optional
+   - single arguments can be defined without brackets
+2. Functional interfaces:
+   - the `@FunctionalInterface` annotation
+   - the `java.util.function` package
+3. Closures and the concept of _effectively final_
+4. Higher order functions
+   - Functions that adapt functions
+5. Static and default instance methods in interfaces
