@@ -21,20 +21,11 @@ public class SuperIterable<E> implements Iterable<E> {
     public SuperIterable<E> filter(Predicate<E> predicate) {
         List<E> results = new ArrayList<>();
 
-        for (E e: self) {
-            if (predicate.test(e)) {
-                results.add(e);
-            }
-        }
+        self.forEach(e -> {
+            if (predicate.test(e)) results.add(e);
+        });
 
         return new SuperIterable<>(results);
-    }
-
-    // For each data item, call the behaviour passed in in the consumer
-    public void forEvery(Consumer<E> consumer) {
-        for (E e: self) {
-            consumer.accept(e);
-        }
     }
 
     @Override
@@ -48,17 +39,17 @@ public class SuperIterable<E> implements Iterable<E> {
         );
 
         // Iterate over the SuperIterable
-        strings.forEvery(s -> System.out.println("> " + s));
+        strings.forEach(s -> System.out.println("> " + s));
 
         // Create a SuperIterable that only contains strings that start with an upper case letter
         SuperIterable<String> upperCase =
                 strings.filter(s -> Character.isUpperCase(s.charAt(0)));
 
         System.out.println("----------------------------------------------------------------");
-        upperCase.forEvery(s -> System.out.println("> " + s));
+        upperCase.forEach(s -> System.out.println("> " + s));
 
         // Check that the original list is unchanged
         System.out.println("----------------------------------------------------------------");
-        strings.forEvery(s -> System.out.println("> " + s));
+        strings.forEach(s -> System.out.println("> " + s));
     }
 }
