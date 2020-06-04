@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 // A wrapper around data (an Iterable) that allows us to apply
@@ -29,6 +30,13 @@ public class SuperIterable<E> implements Iterable<E> {
         return new SuperIterable<>(results);
     }
 
+    // For each data item, call the behaviour passed in in the consumer
+    public void forEvery(Consumer<E> consumer) {
+        for (E e: self) {
+            consumer.accept(e);
+        }
+    }
+
     @Override
     public Iterator<E> iterator() {
         return self.iterator();
@@ -40,23 +48,17 @@ public class SuperIterable<E> implements Iterable<E> {
         );
 
         // Iterate over the SuperIterable
-        for (String string: strings) {
-            System.out.println("> " + string);
-        }
+        strings.forEvery(s -> System.out.println("> " + s));
 
         // Create a SuperIterable that only contains strings that start with an upper case letter
         SuperIterable<String> upperCase =
                 strings.filter(s -> Character.isUpperCase(s.charAt(0)));
 
         System.out.println("----------------------------------------------------------------");
-        for (String string: upperCase) {
-            System.out.println("> " + string);
-        }
+        upperCase.forEvery(s -> System.out.println("> " + s));
 
         // Check that the original list is unchanged
         System.out.println("----------------------------------------------------------------");
-        for (String string: strings) {
-            System.out.println("> " + string);
-        }
+        strings.forEvery(s -> System.out.println("> " + s));
     }
 }

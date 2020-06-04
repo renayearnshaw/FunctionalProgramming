@@ -24,4 +24,10 @@ We learn about:
 5. Pure functions\
    A function whose return value depends only on its arguments and has no side effects (they are _idempotent_).
    It always returns the same result from the same inputs (referential transparency).
-6. Static and default instance methods in interfaces
+6. Static methods in interfaces\
+Allows a higher degree of cohesion by grouping related methods in one place without having to create an object.
+You no longer need to create artificial utility classes that are simply placeholders for static methods.
+6. Default instance methods in interfaces\
+Allows new methods to be added to an interface that are automatically available in all implementations.
+Implementions are therefore not forced to implement the new methods.
+This preserves backward compatibility.
