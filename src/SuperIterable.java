@@ -88,5 +88,18 @@ public class SuperIterable<E> implements Iterable<E> {
             .map(car -> car.getPassengers().get(0) + " is driving a " + car.getColour()
                 + " car with lots of fuel")
             .forEach(description -> System.out.println("> " + description));
+
+        System.out.println("----------------------------------------------------------------");
+        // Add gas to all the cars, but without modifying the original cars
+        cars.map(car -> Car.withGasColourPassengers( // Creates a new car with the data from the old one
+                car.getGasLevel() + 4,
+                car.getColour(),
+                // Convert a list to an array of the right type using an empty array of that type
+                car.getPassengers().toArray(new String[]{})
+        )).forEach(car -> System.out.println("> " + car));
+
+        // Print out the original list of cars
+        System.out.println("----------------------------------------------------------------");
+        cars.forEach(car -> System.out.println("> " + car));
     }
 }
