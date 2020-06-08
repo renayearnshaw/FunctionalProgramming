@@ -40,6 +40,14 @@ public class Car {
         return gasLevel;
     }
 
+    // A 'setter' method that does not modify the existing car, but returns a new one
+    public Car addGas(int gas) {
+        return new Car(gasLevel + gas,
+                colour,
+                passengers,
+                bootContents);
+    }
+
     public String getColour() {
         return colour;
     }
