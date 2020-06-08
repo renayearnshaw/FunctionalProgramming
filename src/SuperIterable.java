@@ -26,6 +26,20 @@ public class SuperIterable<E> implements Iterable<E> {
         return new SuperIterable<>(results);
     }
 
+    // Return a new SuperIterable containing many items for each item in the original SuperIterable
+    // (One to many mapping)
+    public <F> SuperIterable<F> flatMap(Function<E, SuperIterable<F>> operation) {
+        List<F> results = new ArrayList<>();
+
+        self.forEach(
+            // The result of the apply operation is a SuperIterable of type F
+            e -> operation.apply(e)
+                // Add each item in the SuperIterable into the results list
+                .forEach(f-> results.add(f)));
+
+        return new SuperIterable<>(results);
+    }
+
     // Return a new SuperIterable containing objects that pass the predicate
     public SuperIterable<E> filter(Predicate<E> predicate) {
         List<E> results = new ArrayList<>();
@@ -92,6 +106,10 @@ public class SuperIterable<E> implements Iterable<E> {
         System.out.println("----------------------------------------------------------------");
         // Add gas to all the cars, but without modifying the original cars
         cars.map(car -> car.addGas(4)).forEach(car -> System.out.println("> " + car));
+
+        System.out.println("----------------------------------------------------------------");
+        // Print out a list of all the passengers in all the cars
+        cars.flatMap(car -> new SuperIterable<>(car.getPassengers())).forEach(car -> System.out.println("> " + car));
 
         // Print out the original list of cars
         System.out.println("----------------------------------------------------------------");
