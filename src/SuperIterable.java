@@ -109,7 +109,16 @@ public class SuperIterable<E> implements Iterable<E> {
 
         System.out.println("----------------------------------------------------------------");
         // Print out a list of all the passengers in all the cars
-        cars.flatMap(car -> new SuperIterable<>(car.getPassengers())).forEach(car -> System.out.println("> " + car));
+        cars.flatMap(car -> new SuperIterable<>(car.getPassengers())).forEach(passenger -> System.out.println("> " + passenger));
+
+        System.out.println("----------------------------------------------------------------");
+        // Print out a list of all the passengers and which car they were in (by colour).
+        // This preserves the boundaries between the different cars.
+        cars.flatMap(car -> new SuperIterable<>(car.getPassengers())
+                // Map each passenger (a string) to a string containing information about the car.
+                // We are still within the flatMap operation here
+                .map(passenger -> passenger + " is riding in a " + car.getColour() + " car"))
+            .forEach(description -> System.out.println(">  " + description));
 
         // Print out the original list of cars
         System.out.println("----------------------------------------------------------------");
