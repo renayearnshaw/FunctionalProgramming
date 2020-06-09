@@ -14,7 +14,11 @@ public class NullChecks {
 
         String owner = "Ogg";
         Car car = owners.get(owner);
-        List<String> bootContents = car.getBootContents();
-        System.out.println(owner + " has " + bootContents.toString() + " in the car");
+        if (car != null) {
+            List<String> bootContents = car.getBootContents();
+            if (bootContents != null) {
+                System.out.println(owner + " has " + bootContents.toString() + " in the car");
+            }
+        }
     }
 }
