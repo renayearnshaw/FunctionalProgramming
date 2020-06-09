@@ -31,3 +31,7 @@ You no longer need to create artificial utility classes that are simply placehol
 Allows new methods to be added to an interface that are automatically available in all implementations.
 Implementions are therefore not forced to implement the new methods.
 This preserves backward compatibility.
+7. Monads - a type of wrapper object that:
+   - wraps data
+   - provides a way of extracting the data
+   - contains a `flatMap()` method (or something that does the equivalent)
