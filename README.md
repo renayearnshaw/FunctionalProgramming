@@ -37,3 +37,4 @@ This preserves backward compatibility.
    - contains a `flatMap()` method (or something that does the equivalent)
 8. The `Optional` class\
    A container object which may or may not contain a non-null value.
+   It's an monad, specific to handling zero or one instances of 'something'.

@@ -13,27 +13,23 @@ public class NullChecks {
         owners.put("Ogg", Car.withGasColourPassengersandBoot(
                 9, "Black", "Weatherwax", "Magrat"));
 
-        // Traditional version
-        String owner = "Ogg";
-        Car car = owners.get(owner);
-        if (car != null) {
-            List<String> bootContents = car.getBootContents();
-            if (bootContents != null) {
-                System.out.println(owner + " has " + bootContents.toString() + " in the car");
-            }
-        }
-
-        System.out.println("---------------------------------------");
+        String owner = "Sheila";
 
         // Using the monad Optional to wrap our map
         Optional<Map<String, Car>> ownersOpt = Optional.of(owners);
+
         ownersOpt
             // Map the Map to a Car, if one is found for the owner
-            .map(map -> map.get("Ogg"))
-            // Map the car to a List of strings - the boot contents - if the car has any
-            .map(c -> c.getBootContents())
-            // Map the boot contents to a descriptive string, if they existe
-            .map(bootContents -> owner + " has " + bootContents.toString() + " in the car")
+            .map(map -> map.get(owner))
+            .map(
+                // Map the car to a list of strings describing the boot contents - this is an Optional
+                car -> car.getBootContents()
+                // Map the list of strings describing the boot contents to a single string, if they exist..
+                .map(bootContents -> bootContents.toString())
+                // ..or to a alternative string value if they don't
+                .orElse("nothing"))
+            // Map the string describing the boot contents to another string
+            .map(bootContents -> owner + " has " + bootContents + " in the car")
             // print out the description if one exists
             .ifPresent(description -> System.out.println(description));
     }
