@@ -35,3 +35,5 @@ This preserves backward compatibility.
    - wraps data
    - provides a way of extracting the data
    - contains a `flatMap()` method (or something that does the equivalent)
+8. The `Optional` class\
+   A container object which may or may not contain a non-null value.
