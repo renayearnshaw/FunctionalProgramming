@@ -39,9 +39,20 @@ This preserves backward compatibility.
    A container object which may or may not contain a non-null value.
    It's an monad, specific to handling zero or one instances of 'something'.
 9. The `Stream` API\
-   Streams are 'lazy'.\
+   - Streams are 'lazy'.\
    Each item contained by a stream will be processed completely before the next one is processed.\
    This means that a stream can give a result before it's finished processing all the data in the stream.
-   A stream can thus be infinite, and completes when enough data has been processed to give a result.\
-   Streams can only be used once. If you need to process the same data again, you must create a new stream.
-   
+   A stream can thus be infinite, and completes when enough data has been processed to give a result.
+   - Streams can only be used once. If you need to process the same data again, you must create a new stream.
+   - A stream can run concurrently if you have a CPU that has multiple cores. 
+   This means that you cannot use shared mutable data, because you could have multiple threads changing the 
+   data at the same time.
+   - There are variants of streams for processing primitive data (`int`, `long` and `double`)\
+   This is to avoid the boxing and unboxing of primitives, which can be very wasteful of objects and garbage collection.
+   - Terminal operations\
+   These produce final results and terminate stream processing.
+   Any method that doesn't return another stream is a terminal method.
+   - Reduce operations\
+   These aggregate all the data to a single result. 
+   A reduce operation must take two items of one type, and produce a new item of one type.
+   A reduce operation must be *associative*, ie. `(a + b) + c == a + (b + c)`, because it could be used concurrently.
