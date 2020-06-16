@@ -1,5 +1,5 @@
 # FunctionalProgramming
-This project contains code I wrote while following [Functional Programming](https://learning.oreilly.com/videos/functional-programming-for/9780134778235) course by Simon Roberts.
+This project contains code I wrote while following the [Functional Programming](https://learning.oreilly.com/videos/functional-programming-for/9780134778235) course by Simon Roberts.
 
 ### Description
 The __FunctionalProgramming__ project is written using Java 9.
@@ -54,5 +54,9 @@ This preserves backward compatibility.
    Any method that doesn't return another stream is a terminal method.
    - Reduce operations\
    These aggregate all the data to a single result. 
-   A reduce operation must take two items of one type, and produce a new item of one type.
+   A reduce operation must take two items of one type, and produce a brand new item of one type.
    A reduce operation must be *associative*, ie. `(a + b) + c == a + (b + c)`, because it could be used concurrently.
+   - Collect operations\
+   These aggregate all the date to a single result, like a reduce operation.
+   Unlike a reduce operation - which produces a brand new item each time - the collect operation *mutates* data. 
+   This is to avoid the expense of producing new objects for every operation.
