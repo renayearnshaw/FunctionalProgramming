@@ -60,3 +60,4 @@ This preserves backward compatibility.
    These aggregate all the date to a single result, like a reduce operation.
    Unlike a reduce operation - which produces a brand new item each time - the collect operation *mutates* data. 
    This is to avoid the expense of producing new objects for every operation.
+   - Concurrency

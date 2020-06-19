@@ -3,14 +3,17 @@ import java.util.stream.DoubleStream;
 
 public class CollectAverage {
     public static void main(String[] args) {
+        long start = System.nanoTime();
+
         Averager result =
             // The generate method takes a DoubleSupplier, which supplies a new double value
             // each time it's called. Our supplier creates a double between + and - pi. We use
             // ThreadLocalRandom to generate a random number because it supports concurrency,
             // even though this stream runs in sequential mode.
             DoubleStream.generate(() -> ThreadLocalRandom.current().nextDouble(-Math.PI, +Math.PI))
+                .parallel()
                 // limit the stream to produce 1000 values
-                .limit(1000)
+                .limit(4_000_000_000L)
                 .collect(
                     // A Supplier that creates a 'bucket' that contains the data that is mutated.
                     // There is one of these per thread (or sub-stream), so we need to tell the
@@ -21,7 +24,10 @@ public class CollectAverage {
                     (bucket, item) -> bucket.include(item),
                     // A BiConsumer that is used to combine intermediate buckets to give a final result
                     (bucket1, bucket2) -> bucket1.merge(bucket2));
-        System.out.println("Average is " + result.get());
+
+        long end = System.nanoTime();
+        System.out.println("Average is " + result.get() + ", computation took " +
+                ((end - start) / 1_000_000) + " ms");
     }
 }
 
