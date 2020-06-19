@@ -12,8 +12,12 @@ public class CollectAverage {
             // even though this stream runs in sequential mode.
             DoubleStream.generate(() -> ThreadLocalRandom.current().nextDouble(-Math.PI, +Math.PI))
                 .parallel()
-                // limit the stream to produce 1000 values
-                .limit(4_000_000_000L)
+                // an unordered stream is much faster in parallel mode
+                .unordered() // Stream.generate is already unordered
+                // limit the stream to produce a number of values
+                .limit(200_000_000L)
+                // Add some computation to the stream
+                .map(x -> Math.sin(x))
                 .collect(
                     // A Supplier that creates a 'bucket' that contains the data that is mutated.
                     // There is one of these per thread (or sub-stream), so we need to tell the
