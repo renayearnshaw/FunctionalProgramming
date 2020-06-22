@@ -61,4 +61,7 @@ This preserves backward compatibility.
    Unlike a reduce operation - which produces a brand new item each time - the collect operation *mutates* data. 
    This is to avoid the expense of producing new objects for every operation.
    - Concurrency\
-   Using parallel mode to create multiple sub-streamss (*sharding*)
+   Using parallel mode to create multiple sub-streamss (*sharding*).
+   Managing parallel streams comes at a cost, so you need to balance this against what the stream is actually doing.
+   The more computationally intensive a stream is, the more benefit you will get from running in parallel mode. 
+   
