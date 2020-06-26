@@ -1,12 +1,11 @@
-import java.util.Arrays;
-import java.util.List;
-import java.util.NavigableMap;
-import java.util.TreeMap;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Student {
 
     private static final NavigableMap<Integer, String> gradeLetters = new TreeMap<>();
 
+    // Grade thesholds
     static {
         gradeLetters.put(90, "A");
         gradeLetters.put(80, "B");
@@ -27,6 +26,7 @@ public class Student {
         return score;
     }
 
+    // Represent the percentage score as a letter grade
     public String getLetterGrade() {
         return gradeLetters.floorEntry(score).getValue();
     }
@@ -61,5 +61,16 @@ public class Student {
             new Student("Bonzo", 57)
         );
         school.forEach(s -> System.out.println(s));
+
+        // Build a table of letter grades and the students that attained that grade.
+        // The return type of collect() is a map of the key type (the grade) to a list
+        // of the data type that the stream consists of (in this case, students)
+        Map<String, List<Student>> table = school.stream()
+            // Use a Collector object to collect students according the the grade they achieved
+            .collect(Collectors.groupingBy(student -> student.getLetterGrade()));
+        // entrySet() returns a set of key-value pairs, which can be iterated over
+        table.entrySet().stream()
+            .forEach(entry -> System.out.println("Students " + entry.getValue()
+                + " have grade " + entry.getKey()));
     }
 }
