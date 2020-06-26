@@ -68,8 +68,14 @@ public class Student {
         Map<String, List<Student>> table = school.stream()
             // Use a Collector object to collect students according the the grade they achieved
             .collect(Collectors.groupingBy(student -> student.getLetterGrade()));
+
+        // Build a comparator that sorts the map created below in descending order
+        Comparator<Map.Entry<String, List<Student>>> comparator =
+                (e1, e2) -> e2.getKey().compareTo(e1.getKey());
+
         // entrySet() returns a set of key-value pairs, which can be iterated over
         table.entrySet().stream()
+            .sorted(comparator)
             .forEach(entry -> System.out.println("Students " + entry.getValue()
                 + " have grade " + entry.getKey()));
     }
