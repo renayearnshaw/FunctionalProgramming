@@ -69,9 +69,11 @@ public class Student {
             // Use a Collector object to collect students according the the grade they achieved
             .collect(Collectors.groupingBy(student -> student.getLetterGrade()));
 
-        // Build a comparator that sorts the map created below in descending order
-        Comparator<Map.Entry<String, List<Student>>> comparator =
-                (e1, e2) -> e2.getKey().compareTo(e1.getKey());
+        // Build a comparator that sorts the map created below in descending order.
+        // Use the factory method in Map.Entry for comparing by key
+        Comparator<Map.Entry<String, List<Student>>> comparator = Map.Entry.comparingByKey();
+        // Reverse the order of the comparator
+        comparator = comparator.reversed();
 
         // entrySet() returns a set of key-value pairs, which can be iterated over
         table.entrySet().stream()
