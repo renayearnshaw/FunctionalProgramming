@@ -80,5 +80,18 @@ public class Student {
             .sorted(comparator)
             .forEach(entry -> System.out.println("Students " + entry.getValue()
                 + " have grade " + entry.getKey()));
+
+        System.out.println("------------------------------------------------------");
+
+        Map<String, Long> table2 = school.stream()
+            // Use a Collector object to collect students according the the grade they achieved
+            // and to count them
+            .collect(
+                Collectors.groupingBy(student -> student.getLetterGrade(),
+                Collectors.counting()));
+        table2.entrySet().stream()
+                .sorted(Map.Entry.comparingByValue())
+                .forEach(entry -> System.out.println(entry.getValue() + " students have grade " + entry.getKey()));
+
     }
 }
