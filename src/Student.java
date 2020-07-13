@@ -84,14 +84,26 @@ public class Student {
         System.out.println("------------------------------------------------------");
 
         Map<String, Long> table2 = school.stream()
-            // Use a Collector object to collect students according the the grade they achieved
-            // and to count them
             .collect(
+                // Use a Collector object to collect students according to the grade they achieved...
                 Collectors.groupingBy(student -> student.getLetterGrade(),
+                // ...and count them using a downstream collector
                 Collectors.counting()));
+        // Sort by the number of students who achieved a grade
         table2.entrySet().stream()
-                .sorted(Map.Entry.comparingByValue())
-                .forEach(entry -> System.out.println(entry.getValue() + " students have grade " + entry.getKey()));
+            .sorted(Map.Entry.comparingByValue())
+            .forEach(entry -> System.out.println(entry.getValue() + " students have grade " + entry.getKey()));
 
+        System.out.println("------------------------------------------------------");
+
+        Map<String, String> table3 = school.stream()
+            .collect(
+                // Use a Collector object to collect students according to the grade they achieved...
+                Collectors.groupingBy(student -> student.getLetterGrade(),
+                    // ... and map them using a downstream collector
+                    Collectors.mapping(Student::getName, Collectors.joining(", "))));
+        table3.entrySet().stream()
+            .sorted(Map.Entry.comparingByKey())
+            .forEach(entry -> System.out.println(entry.getValue() + "have achieved grade " + entry.getKey()));
     }
 }

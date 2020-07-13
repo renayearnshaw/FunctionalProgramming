@@ -8,15 +8,14 @@ public class CollectAverage {
         Averager result =
             // The generate method takes a DoubleSupplier, which supplies a new double value
             // each time it's called. Our supplier creates a double between + and - pi. We use
-            // ThreadLocalRandom to generate a random number because it supports concurrency,
-            // even though this stream runs in sequential mode.
-            DoubleStream.generate(() -> ThreadLocalRandom.current().nextDouble(-Math.PI, +Math.PI))
+            // ThreadLocalRandom to generate a random number because it supports concurrency.
+            DoubleStream.generate(() -> ThreadLocalRandom.current().nextDouble(-Math.PI, Math.PI))
                 .parallel()
                 // an unordered stream is much faster in parallel mode
-                .unordered() // Stream.generate is already unordered
+                .unordered() // Stream.generate is already unordered so this isn't actually needed
                 // limit the stream to produce a number of values
                 .limit(200_000_000L)
-                // Add some computation to the stream
+                // Add some computation to the stream - this makes parallelization more worthwhile
                 .map(x -> Math.sin(x))
                 .collect(
                     // A Supplier that creates a 'bucket' that contains the data that is mutated.
