@@ -60,37 +60,41 @@ public class Student {
             new Student("Locke", 91),
             new Student("Bonzo", 57)
         );
+
+        // Print out each student
         school.forEach(s -> System.out.println(s));
+        System.out.println("------------------------------------------------------");
 
         // Build a table of letter grades and the students that attained that grade.
         // The return type of collect() is a map of the key type (the grade) to a list
         // of the data type that the stream consists of (in this case, students)
-        Map<String, List<Student>> table = school.stream()
+        Map<String, List<Student>> studentsByGrade = school.stream()
             // Use a Collector object to collect students according the the grade they achieved
             .collect(Collectors.groupingBy(student -> student.getLetterGrade()));
 
-        // Build a comparator that sorts the map created below in descending order.
+        // Build a comparator that sorts the map created above in descending order.
         // Use the factory method in Map.Entry for comparing by key
         Comparator<Map.Entry<String, List<Student>>> comparator = Map.Entry.comparingByKey();
         // Reverse the order of the comparator
         comparator = comparator.reversed();
 
         // entrySet() returns a set of key-value pairs, which can be iterated over
-        table.entrySet().stream()
+        studentsByGrade.entrySet().stream()
             .sorted(comparator)
             .forEach(entry -> System.out.println("Students " + entry.getValue()
                 + " have grade " + entry.getKey()));
 
         System.out.println("------------------------------------------------------");
 
-        Map<String, Long> table2 = school.stream()
+        Map<String, Long> countOfStudentsByGrade = school.stream()
             .collect(
                 // Use a Collector object to collect students according to the grade they achieved...
-                Collectors.groupingBy(student -> student.getLetterGrade(),
-                // ...and count them using a downstream collector
-                Collectors.counting()));
+                Collectors.groupingBy(
+                    student -> student.getLetterGrade(),
+                    // ...and count them using a downstream collector
+                    Collectors.counting()));
         // Sort by the number of students who achieved a grade
-        table2.entrySet().stream()
+        countOfStudentsByGrade.entrySet().stream()
             .sorted(Map.Entry.comparingByValue())
             .forEach(entry -> System.out.println(entry.getValue() + " students have grade " + entry.getKey()));
 
