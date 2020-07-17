@@ -68,7 +68,7 @@ public class Student {
         // Build a table of letter grades and the students that attained that grade.
         // The return type of collect() is a map of the key type (the grade) to a list
         // of the data type that the stream consists of (in this case, students)
-        Map<String, List<Student>> studentsByGrade = school.stream()
+        Map<String, List<Student>> listOfStudentsByGrade = school.stream()
             // Use a Collector object to collect students according the the grade they achieved
             .collect(Collectors.groupingBy(student -> student.getLetterGrade()));
 
@@ -79,7 +79,7 @@ public class Student {
         comparator = comparator.reversed();
 
         // entrySet() returns a set of key-value pairs, which can be iterated over
-        studentsByGrade.entrySet().stream()
+        listOfStudentsByGrade.entrySet().stream()
             .sorted(comparator)
             .forEach(entry -> System.out.println("Students " + entry.getValue()
                 + " have grade " + entry.getKey()));
@@ -88,10 +88,11 @@ public class Student {
 
         Map<String, Long> countOfStudentsByGrade = school.stream()
             .collect(
-                // Use a Collector object to collect students according to the grade they achieved...
+                // Use a Collector object to collect students according to...
                 Collectors.groupingBy(
+                    // the grade they achieved...
                     student -> student.getLetterGrade(),
-                    // ...and count them using a downstream collector
+                    // and count them using a downstream collector
                     Collectors.counting()));
         // Sort by the number of students who achieved a grade
         countOfStudentsByGrade.entrySet().stream()
@@ -100,13 +101,19 @@ public class Student {
 
         System.out.println("------------------------------------------------------");
 
-        Map<String, String> table3 = school.stream()
+        Map<String, String> descriptionOfStudentsByGrade = school.stream()
             .collect(
-                // Use a Collector object to collect students according to the grade they achieved...
-                Collectors.groupingBy(student -> student.getLetterGrade(),
-                    // ... and map them using a downstream collector
-                    Collectors.mapping(Student::getName, Collectors.joining(", "))));
-        table3.entrySet().stream()
+                // Use a Collector object to group students according to...
+                Collectors.groupingBy(
+                    // the grade they achieved...
+                    student -> student.getLetterGrade(),
+                    // and map them...
+                    Collectors.mapping(
+                        // from Students to names...
+                        Student::getName,
+                        // which are joined in a downstream collector to form a description
+                        Collectors.joining(", "))));
+        descriptionOfStudentsByGrade.entrySet().stream()
             .sorted(Map.Entry.comparingByKey())
             .forEach(entry -> System.out.println(entry.getValue() + "have achieved grade " + entry.getKey()));
     }
