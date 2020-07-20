@@ -66,12 +66,12 @@ This preserves backward compatibility.
       a *combiner* method that can combine any intermediate results from separate sub-streams into a final result 
       of type `U`. It also requires an *identity* that defines what you want to produce, and this is an empty 
       version of the result type. This method still produces a brand new item of type `U` for each operation - it 
-      is *non-mutating* -and this can get very expensive.
+      is *non-mutating* - and this can get very expensive.
     - Collect operations\
     These aggregate all the date to a single result, like a reduce operation.
     Unlike a reduce operation - which produces a brand new item each time - the collect operation **mutates** data. 
     This is to avoid the expense of producing new objects for every operation.
-      - The API `collect(Supplier<R> supplier, BiConsumer<R,? super T> accumulator, BiConsumer<R,R> combiner)` still 
+      - `collect(Supplier<R> supplier, BiConsumer<R,? super T> accumulator, BiConsumer<R,R> combiner)` still 
       requires an *accumulator* method that processes the stream type `T` to produce a result type `R`, and a 
       *combiner* method that can combine any intermediate results from separate sub-streams into a final result of 
       type `R`. But the processing is kicked off with a 'seed' object of the result type `R` - one for each 
@@ -80,7 +80,7 @@ This preserves backward compatibility.
       'seed' object.\
     Also, the accumulator operation this time is a consumer, that returns `void` and mutates the 'seed' object, as
      is the combiner that produces the final result.
-      - The API `collect(Collector<? super T,A,R> collector)` takes a `Collector` object.
+      - `collect(Collector<? super T,A,R> collector)` takes a `Collector` object.
     - Concurrency
       - Use the `parallel()` method to create multiple sub-streams (*sharding*).
     Managing parallel streams comes at a cost, so you need to balance this against what the stream is actually doing.
@@ -101,7 +101,7 @@ This class provides several pre-built collectors via static factory methods, suc
     extract the key from the stream element, which you do via the `classifier`. 
     It returns a `Map` of keys to lists of stream elements.
     - `groupingBy(Function<? super T,? extends K> classifier, Collector<? super T,A,D> downstream)`. The stream
-    items that would have been stored in the list are first passed through a *downstream collector*. The values 
+    items that would have been stored in a list are first passed through a *downstream collector*. The values 
     that are stored in the `Map` will no longer be lists, but are the result of the operation provided by the
     downstream collector. 
     - `mapping(Function<? super T,? extends U> mapper, Collector<? super U,A,R> downstream)` returns a `Collector` 
