@@ -46,8 +46,8 @@ public class Concordance {
                 .sorted(reverseOrderByValue)
                 .limit(200)
                 // Format the word count information for printing
-                .map(entry -> String.format("%20s: %d\n", entry.getKey(), entry.getValue()) )
-                .forEach(description -> System.out.printf(description));
+                .map(entry -> String.format("%20s: %d", entry.getKey(), entry.getValue()) )
+                .forEach(description -> System.out.println(description));
         } catch (IOException e) {
             e.printStackTrace();
         }
