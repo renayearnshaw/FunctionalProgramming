@@ -107,3 +107,32 @@ This class provides several pre-built collectors via static factory methods, suc
     - `mapping(Function<? super T,? extends U> mapper, Collector<? super U,A,R> downstream)` returns a `Collector` 
     that maps stream items from type `U` to type `T`, and then passes them through a *downstream collector*, 
     which determines the result that is stored in the map.
+13. Method references\
+These are used when a method already exists that does exactly what you want to do.
+There are four types:
+    - Static method invocation\
+    When a lambda expression takes some arguments, invokes a static method on a class and passes those arguments
+    straight through:\
+    `(a, ...) -> MyClass.aMethod(a, ...)`\
+     becomes\
+    `MyClass::aMethod`
+    - Instance method invocation on a particular object\
+    This time the arguments are passed through to a method that is invoked on an object:\
+    `(a, ...) -> anObject.aMethod(a, ...)`\
+    becomes\
+    `amObject::aMethod`
+    - Constructor invocation\
+    This time the arguments are passed through to a constructor method that is invoked on a new object:\
+    `(a, ...) -> new MyClass(a, ...)`\
+    becomes\
+    `MyClass::new`
+    - Instance method invocation on an arbitrary object\
+    This time the first argument from the lambda is an object which is used to invoke a method.
+    The remaining arguments from the lambda are then passed to that method:\
+    `(a, ...) -> a.aMethod(...)`\
+    becomes\
+    `MyClass::aMethod`, where `a` must be of type `MyClass`\
+    This takes the same format as the static method invocation. How do we know which type of lambda expresssion
+    we're dealing with? The *context* will tell you. If the method used is static or instance, then the appropriate
+    invocation will be used. If you have two methods of the same name in your class, the compiler will throw an 
+    error.

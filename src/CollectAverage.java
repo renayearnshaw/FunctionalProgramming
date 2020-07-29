@@ -16,17 +16,17 @@ public class CollectAverage {
                 // limit the stream to produce a number of values
                 .limit(200_000_000L)
                 // Add some computation to the stream - this makes parallelization more worthwhile
-                .map(x -> Math.sin(x))
+                .map(Math::sin)
                 .collect(
                     // A Supplier that creates a 'bucket' that contains the data that is mutated.
                     // There is one of these per thread (or sub-stream), so we need to tell the
                     // collect method how to create a new bucket.
-                    () -> new Averager(),
+                    Averager::new,
                     // A BiConsumer that is used to calculate an intermediate result - this uses
                     // the data item from the stream to update the bucket contents
-                    (bucket, item) -> bucket.include(item),
+                    Averager::include,
                     // A BiConsumer that is used to combine intermediate buckets to give a final result
-                    (bucket1, bucket2) -> bucket1.merge(bucket2));
+                    Averager::merge);
 
         long end = System.nanoTime();
         System.out.println("Average is " + result.get() + ", computation took " +

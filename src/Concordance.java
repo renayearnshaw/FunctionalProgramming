@@ -23,11 +23,11 @@ public class Concordance {
                 // Read a text file as a stream of strings
                 Files.lines(Paths.get("PrideAndPrejudice.txt"))
                 // Map each line to a stream of the words it contains
-                .flatMap(line -> pattern.splitAsStream(line))
+                .flatMap(pattern::splitAsStream)
                 // Ignore any empty strings that result from the regular expression including paragraph indentations
                 .filter(notEmpty)
-                // Words with different cases count as the same word
-                .map(word -> word.toLowerCase())
+                // Words with different cases count as the same word, so map them all to lower-case
+                .map(String::toLowerCase)
                 // Use a Collector object to group words according to...
                 .collect(Collectors.groupingBy(
                     // the word itself...
@@ -45,7 +45,9 @@ public class Concordance {
                 // Sort by the count of words
                 .sorted(reverseOrderByValue)
                 .limit(200)
-                .forEach(entry -> System.out.printf("%20s: %d\n", entry.getKey(), entry.getValue()));
+                // Format the word count information for printing
+                .map(entry -> String.format("%20s: %d\n", entry.getKey(), entry.getValue()) )
+                .forEach(description -> System.out.printf(description));
         } catch (IOException e) {
             e.printStackTrace();
         }
