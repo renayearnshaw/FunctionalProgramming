@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -9,9 +10,18 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 // Build a 'Concordance' - something that lists the frequency of words in a text file
 public class Concordance {
+    private static Stream<String> lines(Path path) {
+        try {
+            return Files.lines(path);
+        } catch (IOException e) {
+            System.out.println("File read failed: " + e.getMessage());
+            return Stream.empty();
+        }
+    }
     public static void main(String[] args) {
         // Build a list of files to process
         List<String> fileNames = Arrays.asList(
@@ -33,7 +43,7 @@ public class Concordance {
             // map each file name to a Path
             .map(Paths::get)
             // Read each text file as a stream of lines
-            .flatMap(Files::lines)
+            .flatMap(Concordance::lines)
             // Map each line to a stream of the words it contains
             .flatMap(pattern::splitAsStream)
             // Ignore any empty strings that result from the regular expression including paragraph indentations
