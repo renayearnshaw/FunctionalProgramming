@@ -1,11 +1,9 @@
+import javax.swing.text.html.Option;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
@@ -14,12 +12,12 @@ import java.util.stream.Stream;
 
 // Build a 'Concordance' - something that lists the frequency of words in a text file
 public class Concordance {
-    private static Stream<String> lines(Path path) {
+    private static Optional<Stream<String>> lines(Path path) {
         try {
-            return Files.lines(path);
+            return Optional.of(Files.lines(path));
         } catch (IOException e) {
             System.out.println("File read failed: " + e.getMessage());
-            return Stream.empty();
+            return Optional.empty();
         }
     }
     public static void main(String[] args) {
@@ -42,8 +40,15 @@ public class Concordance {
             fileNames.stream()
             // map each file name to a Path
             .map(Paths::get)
-            // Read each text file as a stream of lines
-            .flatMap(Concordance::lines)
+            // Read each text file as an Optional that might contain a stream of lines
+            .map(Concordance::lines)
+            // If the optional is empty print an error
+            .peek(optional -> { if (!optional.isPresent()) System.err.println("Bad File!");})
+            // If there's no data don't try to process it
+            .filter(Optional::isPresent)
+            // Get the stream of strings from the optional - the flatMap merges all the individual
+            // streams into one stream
+            .flatMap(Optional::get)
             // Map each line to a stream of the words it contains
             .flatMap(pattern::splitAsStream)
             // Ignore any empty strings that result from the regular expression including paragraph indentations
