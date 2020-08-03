@@ -120,9 +120,9 @@ There are four types:
     This time the arguments are passed through to a method that is invoked on an object:\
     `(a, ...) -> anObject.aMethod(a, ...)`\
     becomes\
-    `amObject::aMethod`
+    `anObject::aMethod`
     - Constructor invocation\
-    This time the arguments are passed through to a constructor method that is invoked on a new object:\
+    This time the arguments are passed through to a constructor method that is invoked to create a new object:\
     `(a, ...) -> new MyClass(a, ...)`\
     becomes\
     `MyClass::new`
