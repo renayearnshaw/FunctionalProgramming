@@ -1,25 +1,29 @@
-import javax.swing.text.html.Option;
-import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 // Build a 'Concordance' - something that lists the frequency of words in a text file
 public class Concordance {
-    private static Optional<Stream<String>> lines(Path path) {
-        try {
-            return Optional.of(Files.lines(path));
-        } catch (IOException e) {
-            System.out.println("File read failed: " + e.getMessage());
-            return Optional.empty();
-        }
+
+    // This wrapper function takes any behaviour that takes a single argument and returns
+    // a single result but throws an exception. It returns a function that takes a single
+    // argument and returns the same result wrapped in an Optional, *without* throwing an
+    // exception. This resulting behaviour can thus be used in places that can't handle
+    // exceptions, such as our stream processing below.
+    public static <E,F> Function<E, Optional<F>> wrap(ExceptionFunction<E,F> operation) {
+        return e -> {
+            try {
+                return Optional.of(operation.apply(e));
+            } catch (Throwable t) {
+                return Optional.empty();
+            }
+        };
     }
+
     public static void main(String[] args) {
         // Build a list of files to process
         List<String> fileNames = Arrays.asList(
@@ -41,7 +45,7 @@ public class Concordance {
             // map each file name to a Path
             .map(Paths::get)
             // Read each text file as an Optional that might contain a stream of lines
-            .map(Concordance::lines)
+            .map(wrap(path -> Files.lines(path)))
             // If the optional is empty print an error
             .peek(optional -> { if (!optional.isPresent()) System.err.println("Bad File!");})
             // If there's no data don't try to process it
