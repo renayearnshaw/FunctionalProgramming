@@ -9,21 +9,6 @@ import java.util.stream.Collectors;
 // Build a 'Concordance' - something that lists the frequency of words in a text file
 public class Concordance {
 
-    // This wrapper function takes any behaviour that takes a single argument and returns
-    // a single result but throws an exception. It returns a function that takes a single
-    // argument and returns the same result wrapped in an Optional, *without* throwing an
-    // exception. This resulting behaviour can thus be used in places that can't handle
-    // exceptions, such as our stream processing below.
-    public static <E,F> Function<E, Optional<F>> wrap(ExceptionFunction<E,F> operation) {
-        return e -> {
-            try {
-                return Optional.of(operation.apply(e));
-            } catch (Throwable t) {
-                return Optional.empty();
-            }
-        };
-    }
-
     public static void main(String[] args) {
         // Build a list of files to process
         List<String> fileNames = Arrays.asList(
@@ -44,15 +29,15 @@ public class Concordance {
             fileNames.stream()
             // map each file name to a Path
             .map(Paths::get)
-            // Read each text file as an Optional that might contain a stream of lines
-            .map(wrap(path -> Files.lines(path)))
-            // If the optional is empty print an error
-            .peek(optional -> { if (!optional.isPresent()) System.err.println("Bad File!");})
+            // Read each text file as an Either that might contain a stream of lines
+            .map(Either.wrap(path -> Files.lines(path)))
+            // If the Either contains a problem print it out
+            .peek(either -> either.ifFailed(System.err::println))
             // If there's no data don't try to process it
-            .filter(Optional::isPresent)
-            // Get the stream of strings from the optional - the flatMap merges all the individual
+            .filter(either -> either.success())
+            // Get the stream of strings from the Either - the flatMap merges all the individual
             // streams into one stream
-            .flatMap(Optional::get)
+            .flatMap(Either::getValue)
             // Map each line to a stream of the words it contains
             .flatMap(pattern::splitAsStream)
             // Ignore any empty strings that result from the regular expression including paragraph indentations
