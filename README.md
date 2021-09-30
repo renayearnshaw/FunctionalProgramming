@@ -26,7 +26,7 @@ Allows a higher degree of cohesion by grouping related methods in one place with
 You no longer need to create artificial utility classes that are simply placeholders for static methods.
 7. Default instance methods in interfaces\
 Allows new methods to be added to an interface that are automatically available in all implementations.
-Implementions are therefore not forced to implement the new methods.
+Implementations are therefore not forced to implement the new methods.
 This preserves backward compatibility.
 8. Monads - a type of wrapper object that:
    - wraps data
